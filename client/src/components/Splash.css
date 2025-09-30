@@ -1,0 +1,359 @@
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+  }
+  
+  .splash-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.6;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .orb-1 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #6366f1, transparent);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+  
+  .orb-2 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #ec4899, transparent);
+    bottom: 20%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+  
+  .orb-3 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #10b981, transparent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 4s;
+  }
+  
+  .splash-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 400px;
+    padding: 0 2rem;
+  }
+  
+  .logo-container {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .logo-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      0 0 50px rgba(99, 102, 241, 0.5),
+      0 0 100px rgba(236, 72, 153, 0.3);
+    animation: logoAnimation 3s ease-in-out;
+  }
+  
+  .icon-text {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+  }
+  
+  .ripple-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border: 2px solid #6366f1;
+    border-radius: 50%;
+    opacity: 0;
+    animation: ripple 2s linear infinite;
+  }
+  
+  .brand-text {
+    margin-bottom: 3rem;
+  }
+  
+  .app-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px rgba(248, 250, 252, 0.5);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+  }
+  
+  .app-subtitle {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+  }
+  
+  .loading-container {
+    margin-top: 2rem;
+  }
+  
+  .loading-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+  }
+  
+  .loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #ec4899, #10b981);
+    border-radius: 2px;
+    animation: loadingProgress 3s ease-in-out;
+    background-size: 200% 100%;
+  }
+  
+  .loading-text {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s forwards;
+  }
+  
+  .floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .float-element {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0;
+    animation: floatIn 3s ease-out forwards;
+  }
+  
+  .element-1 {
+    top: 15%;
+    right: 20%;
+    animation-delay: 0.5s;
+  }
+  
+  .element-2 {
+    bottom: 25%;
+    left: 15%;
+    animation-delay: 1s;
+  }
+  
+  .element-3 {
+    top: 60%;
+    right: 25%;
+    animation-delay: 1.5s;
+  }
+  
+  .element-4 {
+    bottom: 40%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+  
+  /* Animaciones */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes logoAnimation {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2) rotate(180deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) rotate(360deg);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes titleGlow {
+    0% {
+      text-shadow: 0 0 30px rgba(248, 250, 252, 0.5);
+    }
+    100% {
+      text-shadow: 0 0 40px rgba(99, 102, 241, 0.8);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes loadingProgress {
+    0% {
+      width: 0%;
+      background-position: 200% 0;
+    }
+    100% {
+      width: 100%;
+      background-position: -200% 0;
+    }
+  }
+  
+  @keyframes floatIn {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.7;
+      transform: translateY(-10px) rotate(360deg);
+    }
+  }
+  
+  /* Fases de animación */
+  .splash-screen.pulse .logo-icon {
+    animation: pulse 1s ease-in-out infinite;
+  }
+  
+  .splash-screen.glow .logo-icon {
+    box-shadow: 
+      0 0 100px rgba(99, 102, 241, 0.8),
+      0 0 200px rgba(236, 72, 153, 0.5);
+  }
+  
+  .splash-screen.final {
+    animation: fadeOut 0.5s ease-out 0.3s forwards;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .app-title {
+      font-size: 2rem;
+    }
+    
+    .logo-icon {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .icon-text {
+      font-size: 2.5rem;
+    }
+    
+    .orb-1, .orb-2, .orb-3 {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .float-element {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .splash-content {
+      padding: 0 1rem;
+    }
+    
+    .app-title {
+      font-size: 1.8rem;
+    }
+    
+    .loading-bar {
+      width: 150px;
+    }
+  }
