@@ -20,7 +20,7 @@ jobs:
 
       # 2. Instala K6 en la máquina virtual de GitHub
       - name: Setup k6
-        uses: k6io/setup-k6@v0.2.0   # <--- ¡ESTA ES LA LÍNEA CORREGIDA!
+        uses: grafana/setup-k6-action@v1  # <--- ¡ESTA ES LA LÍNEA CORREGIDA!
 
       # 3. Ejecutar K6 y ENVIAR resultados a InfluxDB
       - name: Run k6 load test
