@@ -1,0 +1,28 @@
+# Nombre que aparecerá en la pestaña "Actions"
+name: Prueba de Carga K6
+
+# Define cuándo debe ejecutarse el workflow
+on:
+  # Se ejecuta cada vez que haces push a la rama 'main'
+  push:
+    branches: [ main ]
+
+  # Permite ejecutarlo manualmente desde la pestaña "Actions"
+  workflow_dispatch:
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Trae tu código (para que GitHub tenga tu script de K6)
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # 2. Instala K6 en la máquina virtual de GitHub
+      - name: Setup k6
+        uses: grafana/k6-action@v0.2.0
+
+      # 3. Ejecutar K6 y ENVIAR resultados a InfluxDB
+      - name: Run k6 load test
+        run: |
+          k6 run --out influxdb=url=${{ secrets.INFLUXDB_URL }},token=${{ secrets.INFLUXDB_TOKEN }},org=${{ secrets.INFLUXDB_ORG }},bucket=${{ secrets.INFLUXDB_BUCKET }} script.js
