@@ -20,9 +20,9 @@ jobs:
 
       # 2. Instala K6 en la máquina virtual de GitHub
       - name: Setup k6
-        uses: grafana/setup-k6-action@v1  # <--- ¡ESTA ES LA LÍNEA CORREGIDA!
+        uses: grafana/setup-k6-action@v1
 
       # 3. Ejecutar K6 y ENVIAR resultados a InfluxDB
       - name: Run k6 load test
         run: |
-          k6 run --out influxdb=url=${{ secrets.INFLUXDB_URL }},token=${{ secrets.INFLUXDB_TOKEN }},org=${{ secrets.INFLUXDB_ORG }},bucket=${{ secrets.INFLUXDB_BUCKET }} k6-script.js
+          k6 run --out "influxdb=url=${{ secrets.INFLUXDB_URL }},token=${{ secrets.INFLUXDB_TOKEN }},org=${{ secrets.INFLUXDB_ORG }},bucket=${{ secrets.INFLUXDB_BUCKET }}" k6-script.js
