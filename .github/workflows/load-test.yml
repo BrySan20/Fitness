@@ -6,7 +6,7 @@ on:
   # Se ejecuta cada vez que haces push a la rama 'main'
   push:
     branches: [ main ]
-
+    
   # Permite ejecutarlo manualmente desde la pestaña "Actions"
   workflow_dispatch:
 
@@ -20,7 +20,7 @@ jobs:
 
       # 2. Instala K6 en la máquina virtual de GitHub
       - name: Setup k6
-        uses: grafana/k6-action@v0.2.0
+        uses: k6io/setup-k6@v0.2.0   # <--- ¡ESTA ES LA LÍNEA CORREGIDA!
 
       # 3. Ejecutar K6 y ENVIAR resultados a InfluxDB
       - name: Run k6 load test
