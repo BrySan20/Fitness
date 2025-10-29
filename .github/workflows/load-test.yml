@@ -24,5 +24,11 @@ jobs:
 
       # 3. Ejecutar K6 y ENVIAR resultados a InfluxDB
       - name: Run k6 load test
+        # Define las variables de entorno que K6 leerá automáticamente
+        env:
+          K6_INFLUXDB_ORGANIZATION: ${{ secrets.INFLUXDB_ORG }}
+          K6_INFLUXDB_BUCKET: ${{ secrets.INFLUXDB_BUCKET }}
+          K6_INFLUXDB_TOKEN: ${{ secrets.INFLUXDB_TOKEN }}
         run: |
-          k6 run --out "influxdb=url=${{ secrets.INFLUXDB_URL }},token=${{ secrets.INFLUXDB_TOKEN }},org=${{ secrets.INFLUXDB_ORG }},bucket=${{ secrets.INFLUXDB_BUCKET }}" k6-script.js
+          # El comando --out ahora solo necesita la URL de InfluxDB
+          k6 run --out "influxdb=${{ secrets.INFLUXDB_URL }}" k6-script.js
