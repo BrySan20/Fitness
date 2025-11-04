@@ -51,8 +51,17 @@ jobs:
             # 2. Crea el archivo JSON secreto desde el Secret de GitHub
             echo '${{ secrets.FIREBASE_ADMIN_SDK_JSON }}' > fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json
             
-            # 3. Crea el docker-compose.yml automáticamente
-            # (¡No más errores de nano!)
+            # 3. LIMPIEZA COMPLETA - Detén todo lo relacionado con docker-compose
+            docker-compose down --remove-orphans || true
+            
+            # 4. Elimina el contenedor específico si existe
+            docker container stop fitness_app || true
+            docker container rm -f fitness_app || true
+            
+            # 5. Limpia imágenes y volúmenes huérfanos
+            docker image prune -f || true
+            
+            # 6. Crea el docker-compose.yml automáticamente
             cat << 'EOF' > docker-compose.yml
             version: '3.8'
             services:
@@ -66,13 +75,8 @@ jobs:
                   - ./fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json:/app/server/fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json
             EOF
             
-            # 4. Detén y elimina el contenedor viejo/corrupto (Esto arregla el 'KeyError')
-            # '|| true' ignora el error si el contenedor no existe
-            docker container stop fitness_app || true
-            docker container rm fitness_app || true
-            
-            # 5. Jala la nueva imagen de Docker
+            # 7. Jala la nueva imagen de Docker
             docker-compose pull
             
-            # 6. Inicia el nuevo contenedor
-            docker-compose up -d
+            # 8. Inicia el nuevo contenedor (sin --force-recreate que causa problemas)
+            docker-compose up -d --remove-orphans
