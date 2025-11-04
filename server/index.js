@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 5000;
 // Sirve los archivos estáticos de React (CSS, JS, imágenes)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Sirve el index.html de React para cualquier ruta que no sea de la API
-app.get('*', (req, res) => {
+// ¡ESTA ES LA LÍNEA CORREGIDA!
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
