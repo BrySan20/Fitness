@@ -27,8 +27,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ toLower(github.repository) }}:latest
+            ghcr.io/${{ toLower(github.repository) }}:${{ github.sha }}
 
   deploy:
     needs: build-and-push
@@ -43,12 +43,12 @@ jobs:
           script: |
             # 1. Navega al directorio de tu app en el VPS
             cd /home/deployer/proyecto
-
+            
             # 2. Jala la nueva imagen de Docker
             docker-compose pull 
-
+            
             # 3. Reinicia el contenedor con la nueva imagen
             docker-compose up -d 
-
+            
             # 4. Opcional: Limpia imágenes viejas
             docker image prune -f
