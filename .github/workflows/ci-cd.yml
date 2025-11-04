@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   push:
-    [cite_start]branches: [ main ] # Se activa al hacer push a la rama 'main' [cite: 13]
+    branches: [ main ]
 
 jobs:
   build-and-push:
@@ -19,27 +19,27 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          [cite_start]password: ${{ secrets.GITHUB_TOKEN }} # [cite: 27]
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: | [cite_start]# [cite: 31-33]
+          tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}
 
   deploy:
-    [cite_start]needs: build-and-push # Espera a que la imagen se construya [cite: 39]
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
-          [cite_start]host: ${{ secrets.SSH_HOST }} # [cite: 44]
-          [cite_start]username: ${{ secrets.SSH_USER }} # [cite: 45]
-          [cite_start]key: ${{ secrets.SSH_PRIVATE_KEY }} # [cite: 46]
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # 1. Navega al directorio de tu app en el VPS
             cd /home/deployer/proyecto
@@ -52,4 +52,3 @@ jobs:
 
             # 4. Opcional: Limpia imágenes viejas
             docker image prune -f
-
