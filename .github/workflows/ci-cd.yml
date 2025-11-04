@@ -51,17 +51,25 @@ jobs:
             # 2. Crea el archivo JSON secreto desde el Secret de GitHub
             echo '${{ secrets.FIREBASE_ADMIN_SDK_JSON }}' > fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json
             
-            # 3. LIMPIEZA COMPLETA - Detén todo lo relacionado con docker-compose
+            # 3. Crea el archivo .env con las llaves VAPID
+            cat << 'EOF' > .env
+            VAPID_PUBLIC_KEY=${{ secrets.VAPID_PUBLIC_KEY }}
+            VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}
+            VAPID_SUBJECT=${{ secrets.VAPID_SUBJECT }}
+            EOF
+            
+            # 4. LIMPIEZA COMPLETA - Detén todo lo relacionado con docker-compose
             docker-compose down --remove-orphans || true
             
-            # 4. Elimina el contenedor específico si existe
+            # 5. Elimina el contenedor específico si existe
             docker container stop fitness_app || true
             docker container rm -f fitness_app || true
             
-            # 5. Limpia imágenes y volúmenes huérfanos
-            docker image prune -f || true
+            # 6. Limpia imágenes viejas y volúmenes huérfanos
+            docker image prune -af || true
+            docker volume prune -f || true
             
-            # 6. Crea el docker-compose.yml automáticamente
+            # 7. Crea el docker-compose.yml automáticamente
             cat << 'EOF' > docker-compose.yml
             version: '3.8'
             services:
@@ -73,10 +81,14 @@ jobs:
                 restart: unless-stopped
                 volumes:
                   - ./fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json:/app/server/fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json
+                  - ./.env:/app/.env
             EOF
             
-            # 7. Jala la nueva imagen de Docker
+            # 8. Jala la nueva imagen de Docker (forzando descarga sin caché)
             docker-compose pull
             
-            # 8. Inicia el nuevo contenedor (sin --force-recreate que causa problemas)
+            # 9. Inicia el nuevo contenedor limpiamente
             docker-compose up -d --remove-orphans
+            
+            # 10. Verifica que el contenedor esté corriendo
+            docker ps | grep fitness_app
