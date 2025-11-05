@@ -76,7 +76,7 @@ jobs:
                 image: ghcr.io/brysan20/fitness:latest
                 container_name: fitness_app
                 ports:
-                  - "80:5000"
+                  - "127.0.0.1:5000:5000"
                 restart: unless-stopped
                 volumes:
                   - ./fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json:/app/server/fitness-tracker-pwa-firebase-adminsdk-fbsvc-ab44bd97d5.json
